@@ -8,13 +8,27 @@
             <span class="fa fa-spinner bigicon"></span>
             <h2>Register</h2>
             <div>
-                <input id="username" type="text" placeholder="Username" onkeypress="check_values();">
-                <input id="password" type="password" placeholder="password" onkeypress="check_values();">
-				<input id="address" type="text" placeholder="Address" onkeypress="check_values();">
-				<input id="city" type="text" placeholder="City" onkeypress="check_values();">
-				<input id="contactno" type="text" placeholder="Contact no" onkeypress="check_values();">
-                <button type="button" class="button">Register</button>
-                
+			<form name = "studentForm" novalidate>
+			<input name = "email" type = "email" placeholder="Email" ng-model = "email" length = "100" required>
+                     <span style = "color:red" ng-show = "studentForm.email.$dirty && studentForm.email.$invalid"><br>
+                        <span ng-show = "studentForm.email.$error.required">Email is required.</span>
+                        <span ng-show = "studentForm.email.$error.email">Invalid email address.</span>
+                     </span>
+					 
+					 <input name = "password" type = "text" placeholder="Password" ng-model = "password" length = "100" required>
+                     <span style = "color:red" ng-show = "studentForm.password.$dirty && studentForm.password.$invalid">
+                        <span ng-show = "studentForm.password.$error.required">Password is required.</span>
+                     </span>
+					 
+					 <input name = "username" type = "text" placeholder="User name" ng-model = "username" length = "100" required>
+                     <span style = "color:red" ng-show = "studentForm.username.$dirty && studentForm.username.$invalid"><br>
+                        <span ng-show = "studentForm.username.$error.required">User name is required.</span>
+                     </span>
+				<br><br>
+                <button ng-disabled = "studentForm.username.$dirty &&
+                        studentForm.username.$invalid || studentForm.email.$dirty &&
+                        studentForm.email.$invalid || studentForm.password.$dirty && studentForm.password.$invalid" ng-click="submit()" class="button">Register</button>
+                </form>
             </div>
             <div>
                 <br>

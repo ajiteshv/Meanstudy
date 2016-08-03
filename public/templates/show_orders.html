@@ -8,10 +8,21 @@
             <span class="fa fa-spinner bigicon"></span>
             <h2>Login</h2>
             <div>
-                <input id="username" type="text" placeholder="username" onkeypress="check_values();">
-                <input id="password" type="password" placeholder="password" onkeypress="check_values();">
-                <button type="button" class="button">Login</button>
-                
+			<form name = "studentForm" novalidate>
+                <input name = "email" type = "email" placeholder="Email" ng-model = "email" length = "100" required>
+                     <span style = "color:red" ng-show = "studentForm.email.$dirty && studentForm.email.$invalid"><br>
+                        <span ng-show = "studentForm.email.$error.required">Email is required.</span>
+                        <span ng-show = "studentForm.email.$error.email">Invalid email address.</span>
+                     </span>
+					 <br>
+					                 <input name = "password" type = "text" placeholder="password" ng-model = "password" required>
+                     <span style = "color:red" ng-show = "studentForm.password.$dirty && studentForm.password.$invalid"><br>
+                        <span ng-show = "studentForm.password.$error.required">Password is required.</span>
+                     </span>
+					 <br><br>
+					  <button ng-disabled = "studentForm.email.$dirty &&
+                        studentForm.email.$invalid || studentForm.password.$dirty && studentForm.password.$invalid" ng-click="submit()" class="button">Login</button>
+                </form>
             </div>
             <div>
                 <br>
@@ -124,5 +135,5 @@ function check_values() {
         $("#lock1").addClass("hidden").animate({ left: '250px' });;
     }
 }
-
+         
 </script>

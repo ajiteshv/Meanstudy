@@ -1,5 +1,15 @@
 //Define an angular module for our app
 var sampleApp = angular.module('sampleApp', []);
+         
+         sampleApp.controller('studentController', function($scope) {
+            $scope.reset = function(){
+               $scope.email = "";
+               $scope.password = "";
+			   $scope.username = "";
+            }
+            
+            $scope.reset();
+         });
 
 //Define Routing for app
 //Uri /AddNewOrder -> template add_order.html and Controller AddOrderController
