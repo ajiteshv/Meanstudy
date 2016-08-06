@@ -26,6 +26,43 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 
+var user = require('./models/movie');
+var express = require('express');
+
+
+function createData(req, res){
+
+var userr = new user(req.body);
+
+  userr.save(function(err) {
+    if (err) {
+      return res.send(err);
+    }
+console.log("user registered successfully.");
+});
+}
+
+function loginuser(req, res){
+console.log("user login");
+}
+function alluser(req, res){
+ user.find(function(err, movies) {
+    if (err) {
+      return res.send(err);
+    }
+    res.json(movies);
+  });
+console.log("Display all users.");
+}
+
+
+app.post('/createData', createData);   // create data --> input to collection
+app.post('/loginuser', loginuser); 
+app.get('/userData', alluser);  
+ 
+
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

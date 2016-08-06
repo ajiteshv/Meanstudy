@@ -2,13 +2,14 @@
 var sampleApp = angular.module('sampleApp', []);
          
          sampleApp.controller('studentController', function($scope) {
-            $scope.reset = function(){
+          /*   $scope.reset = function(){
                $scope.email = "";
                $scope.password = "";
 			   $scope.username = "";
             }
             
-            $scope.reset();
+            $scope.reset(); */
+			
          });
 
 //Define Routing for app
@@ -21,6 +22,10 @@ sampleApp.config(['$routeProvider',
 		templateUrl: 'templates/add_order.html',
 		controller: 'AddOrderController'
 	}).
+	when('/UserList', {
+		templateUrl: 'templates/userlist.html',
+		controller: 'UsersController'
+      }).
       when('/ShowOrders', {
 		templateUrl: 'templates/show_orders.html',
 		controller: 'ShowOrdersController'
