@@ -4,6 +4,13 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
+
+ 
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -38,6 +45,7 @@ var userr = new user(req.body);
     if (err) {
       return res.send(err);
     }
+	res.render('users/userlist');
 console.log("user registered successfully.");
 });
 }
@@ -54,14 +62,48 @@ function alluser(req, res){
   });
 console.log("Display all users.");
 }
+// Remove data from the collection
+function deleteDatass(req, res){
+  var idd = req.params.id;
+ user.findOneAndRemove({ _id: idd }, function(err) {
+  if (err) throw err;
 
+  // we have deleted the user
+  console.log('User deleted!');
+});
+  }
+  passport.use(new LocalStrategy(
+  function(email, password, done) {
+    user.findOne({ email: email }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
+  
+  app.use(session({
+  secret: 'secret',
+  saveUninitialized: true,
+  resave: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.post('/createData', createData);   // create data --> input to collection
-app.post('/loginuser', loginuser); 
-app.get('/userData', alluser);  
- 
-
-
+app.get('/userData', alluser); 
+app.delete('/deleteData/:id', deleteDatass); 
+ app.post('/login',
+  passport.authenticate('local',{successRedirect:'/',failureRedirect:'ShowOrders/show_orders'}),
+  function(req, res) {
+  console.log("hi");
+    res.redirect('users/userlist');
+  });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

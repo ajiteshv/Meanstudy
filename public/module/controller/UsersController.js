@@ -8,4 +8,10 @@ sampleApp.controller('UsersController', function($scope, $http) {
 	}
 
 	userlist();  //run the refresh function at load
+	
+	$scope.remove = function(id){
+		$http.delete('/deleteData/' + id).success(function(response){
+			userlist();
+		});
+	};
 });

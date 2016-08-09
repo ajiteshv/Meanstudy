@@ -8,3 +8,8 @@ var movieSchema = new Schema({
 });
 
 module.exports = mongoose.model('User', movieSchema);
+/* module.exports.getUserByUsername = function (username,callback){
+var query = {username:username};
+user.findOne(query,callback);
+
+} */
